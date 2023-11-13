@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-const { execSync } = require("child_process");
+const { exec } = require("child_process");
 
 function processVersion(version){
     console.log(`Version : ${version}`)
@@ -18,14 +18,14 @@ function processVersion(version){
 
     //create new Branch "release/version" and commit
 
-    execSync(`git branch release/${newRelease}`)
-    execSync(`git checkout release/${newRelease}`)
+    exec(`git branch release/${newRelease}`)
+    exec(`git checkout release/${newRelease}`)
 
-    execSync(`mvn versions:set -DnewVersion=${newRelease}`)
+    exec(`mvn versions:set -DnewVersion=${newRelease}`)
 
-    execSync(`git commit -m "[ACTION] Release version ${newRelease}"`)
+    exec(`git commit -m "[ACTION] Release version ${newRelease}"`)
 
-    execSync(`git push -u origin -m release/${newRelease}`)
+    exec(`git push -u origin -m release/${newRelease}`)
 
     //commit with newVersion in master
 
@@ -42,7 +42,7 @@ try {
     console.log(`The event payload: ${payload}`);*/
     // mvn help:evaluate -Dexpression=project.version -q -DforceStdout
 
-    execSync("mvn help:evaluate -Dexpression=project.version -q -DforceStdout", (error, stdout, stderr) => {
+    exec("mvn help:evaluate -Dexpression=project.version -q -DforceStdout", (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;
