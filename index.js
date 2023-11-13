@@ -8,7 +8,7 @@ function processVersion(version){
     let minor = version.split(".")[1];
     let major = version.split(".")[0];
     let patch = version.split(".")[2].split("-")[0];
-    let snapshot = version.split("-");
+    let snapshot = version.split("-")[1];
 
 
 
