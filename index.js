@@ -18,6 +18,7 @@ function processVersion(version){
     let newVersion = major+"."+minor+"."+patch+"-"+snapshot;
 
     //create new Branch "release/version" and commit
+    console.log(github.context.apiUrl)
 
     //  git config --global user.email "you@example.com"
     //   git config --global user.name "Your Name"
