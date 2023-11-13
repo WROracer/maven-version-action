@@ -1,9 +1,5 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
-inputs:
-  url:
-    description: the Repository url to use
-    required: true
 runs:
   using: 'node20'
   main: 'index.js'

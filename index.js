@@ -19,22 +19,6 @@ function processVersion(version){
 
     //create new Branch "release/version" and commit
 
-
-    const url = core.getInput('url');
-    console.log(url)
-
-    execSync(`git remote set-url origin ${url}`,(error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-    })
-
     //  git config --global user.email "you@example.com"
     //   git config --global user.name "Your Name"
     execSync(`git config --global user.name "Action Bot"`)
@@ -110,6 +94,57 @@ function processVersion(version){
         }
         console.log(`stdout: ${stdout}`);
     })
+
+    execSync(`git checkout master`)
+
+    execSync(`mvn versions:set -DnewVersion=${newVersion}`,(error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    })
+
+    execSync(`git add ./\\pom.xml`,(error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    })
+
+    execSync(`git commit -m \"[ACTION] New Development version ${newVersion}\"`,(error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    })
+
+    execSync(`git push -u origin master`,(error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    })
+
 
     //commit with newVersion in master
 
