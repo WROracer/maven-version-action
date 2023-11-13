@@ -10,11 +10,12 @@ function processVersion(version){
     let patch = version.split(".")[2].split("-")[0];
     let snapshot = version.split("-");
 
-    patch++;
 
 
-    let newVersion = major+"."+minor+"."+patch+"-"+snapshot;
+
     let newRelease = major+"."+minor+"."+patch;
+    patch++;
+    let newVersion = major+"."+minor+"."+patch+"-"+snapshot;
 
     //create new Branch "release/version" and commit
 
