@@ -20,6 +20,10 @@ function processVersion(version){
     //create new Branch "release/version" and commit
     console.log(github.context.repo.repo)
 
+    const url = core.getInput('url');
+
+    execSync(`git remote set-url origin ${url}`)
+
     //  git config --global user.email "you@example.com"
     //   git config --global user.name "Your Name"
     execSync(`git config --global user.name "Action Bot"`)
