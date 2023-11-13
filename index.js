@@ -18,14 +18,64 @@ function processVersion(version){
 
     //create new Branch "release/version" and commit
 
-    exec(`git branch release/${newRelease}`)
-    exec(`git checkout release/${newRelease}`)
+    exec(`git branch release/${newRelease}`,(error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    })
+    exec(`git checkout release/${newRelease}`,(error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    })
 
-    exec(`mvn versions:set -DnewVersion=${newRelease}`)
+    exec(`mvn versions:set -DnewVersion=${newRelease}`,(error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    })
 
-    exec(`git commit -m "[ACTION] Release version ${newRelease}"`)
+    exec(`git commit -m "[ACTION] Release version ${newRelease}"`,(error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    })
 
-    exec(`git push -u origin -m release/${newRelease}`)
+    exec(`git push -u origin -m release/${newRelease}`,(error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    })
 
     //commit with newVersion in master
 
