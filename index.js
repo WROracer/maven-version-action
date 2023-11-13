@@ -18,11 +18,22 @@ function processVersion(version){
     let newVersion = major+"."+minor+"."+patch+"-"+snapshot;
 
     //create new Branch "release/version" and commit
-    console.log(github.context.repo.repo)
+
 
     const url = core.getInput('url');
+    console.log(url)
 
-    execSync(`git remote set-url origin ${url}`)
+    execSync(`git remote set-url origin ${url}`,(error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    })
 
     //  git config --global user.email "you@example.com"
     //   git config --global user.name "Your Name"
