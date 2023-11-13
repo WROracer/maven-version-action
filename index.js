@@ -95,7 +95,7 @@ function processVersion(version){
         console.log(`stdout: ${stdout}`);
     })
 
-    execSync(`git push -u origin release/${newRelease}`,(error, stdout, stderr) => {
+    execSync(`git push --follow-tags -u origin release/${newRelease}`,(error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;
