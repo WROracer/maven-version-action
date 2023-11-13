@@ -7,7 +7,7 @@ function processVersion(version){
     console.log(`Version : ${version}`)
     let minor = version.split(".")[1];
     let major = version.split(".")[0];
-    let patch = version.split(".")[2];
+    let patch = version.split(".")[2].split("-")[0];
     let snapshot = version.split("-");
 
     patch++;
@@ -17,6 +17,11 @@ function processVersion(version){
     let newRelease = major+"."+minor+"."+patch;
 
     //create new Branch "release/version" and commit
+
+    //  git config --global user.email "you@example.com"
+    //   git config --global user.name "Your Name"
+    exec(`git config --global user.name "Action Bot"`)
+    exec(`git config --global user.name "Action-Bot@github.com"`)
 
     exec(`git branch release/${newRelease}`,(error, stdout, stderr) => {
         if (error) {
