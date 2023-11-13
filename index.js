@@ -58,6 +58,18 @@ function processVersion(version){
         console.log(`stdout: ${stdout}`);
     })
 
+    execSync(`git add ./\\pom.xml"`,(error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    })
+
     execSync(`git commit -m "[ACTION] Release version ${newRelease}"`,(error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
