@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-const { exec } = require("child_process");
+const { exec,execSync } = require("child_process");
 
 function processVersion(version){
     console.log(`Version : ${version}`)
@@ -20,10 +20,10 @@ function processVersion(version){
 
     //  git config --global user.email "you@example.com"
     //   git config --global user.name "Your Name"
-    exec(`git config --global user.name "Action Bot"`)
-    exec(`git config --global user.name "Action-Bot@github.com"`)
+    execSync(`git config --global user.name "Action Bot"`)
+    execSync(`git config --global user.name "Action-Bot@github.com"`)
 
-    exec(`git branch release/${newRelease}`,(error, stdout, stderr) => {
+    execSync(`git branch release/${newRelease}`,(error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;
@@ -34,19 +34,7 @@ function processVersion(version){
         }
         console.log(`stdout: ${stdout}`);
     })
-    exec(`git checkout release/${newRelease}`,(error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-    })
-
-    exec(`mvn versions:set -DnewVersion=${newRelease}`,(error, stdout, stderr) => {
+    execSync(`git checkout release/${newRelease}`,(error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;
@@ -58,7 +46,7 @@ function processVersion(version){
         console.log(`stdout: ${stdout}`);
     })
 
-    exec(`git commit -m "[ACTION] Release version ${newRelease}"`,(error, stdout, stderr) => {
+    execSync(`mvn versions:set -DnewVersion=${newRelease}`,(error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;
@@ -70,7 +58,19 @@ function processVersion(version){
         console.log(`stdout: ${stdout}`);
     })
 
-    exec(`git push -u origin -m release/${newRelease}`,(error, stdout, stderr) => {
+    execSync(`git commit -m "[ACTION] Release version ${newRelease}"`,(error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+    })
+
+    execSync(`git push -u origin release/${newRelease}`,(error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;
